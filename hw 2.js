@@ -1,4 +1,4 @@
-//I got this working, sort of, I tried to add a function for clearing the text entry field after the user submitted the text and after the button was drawn, it broke the buttons displaying. Could not figure out how to undo the damage...too tired I suspect.
+
 //This variable sets the theme for the gif exploration
 var gifs = ["funny", "reaction", "fail", "amazing"];
 
@@ -7,7 +7,9 @@ function seekGif() {
 
     var subject = $(this).attr("gif-input");
     console.log(this);
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+subject+"&api_key=v6rtGxUZpm3xw5YYBVoxSKOsZAHMLtQc&rating=pg-13&limit=10";
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q="+subject+"&api_key=v6rtGxUZpm3xw5YYBVoxSKOsZAHMLtQc&limit=10";
+
+ 
 
     // Creating an AJAX call for the button being clicked
 
@@ -17,8 +19,10 @@ function seekGif() {
         method: "GET"
     }).then(function(response) {
         console.log(response);
-        //$("#gifs").text(JSON.stringify(response));
 
+        //struggling with how to structure the parsing of the JSON object 
+        //$("#gifs").text(JSON.stringify(response));
+        //var newData = JSON.parse
         // Creating a div to hold the gifs
         var gifDiv = $("<div class='gifs'>");
 
@@ -52,7 +56,7 @@ function renderButtons() {
     // starting out with an empty page
     $("#buttons-view").empty();
 
-    // Looping through the array of gifs (Line 06ish)
+    // Looping through the array of gifs (Line 06)
     for (var i = 0; i < gifs.length; i++) {
 
         // Then dynamicaly generating buttons for each movie in the array
@@ -68,7 +72,7 @@ function renderButtons() {
     }
 }
 
-//This fuction starts gifs on click and pauses again on even clicks, I have to get the F$&#%$^ images to display first...
+//This fuction starts gifs on click and pauses again on even clicks
 $(".gif").on("click", function() {
     // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
     var state = $(this).attr("data-state");
@@ -83,13 +87,6 @@ $(".gif").on("click", function() {
         $(this).attr("data-state", "still");
     }
 });
-
-//This Function clears the text entry field
-
-// function clearFields() {
-//      $("#input").value = "";
-//      };
-
 
 //This funtion takes the text frm the input and creates a new gif-btn from it
 $("#addEntry").on("click", function() {
@@ -113,22 +110,11 @@ $("#addEntry").on("click", function() {
 
         gifs.push(subject);
 
-        // clearFields();
-
-            });
-
-
-        //};
 
     // Calling renderButtons which handles the processing of our movie array
         renderButtons();
 
-        //EMPTYING THE TEXT BOX
-
-         $("#input").empty(); 
-
-
-};
+});
 
 
 
