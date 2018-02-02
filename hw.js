@@ -7,7 +7,7 @@ function seekGif() {
 
     var subject = $(this).attr("gif-input");
     console.log(this);
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +subject+ "?api_key=OLAtzOJQUe4LrCWgX4U0wQjzzwxjgkHW&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+subject+"&api_key=v6rtGxUZpm3xw5YYBVoxSKOsZAHMLtQc&limit=10";
 
     // Creating an AJAX call for the button being clicked
 
@@ -17,12 +17,13 @@ function seekGif() {
         method: "GET"
     }).then(function(response) {
         console.log(response);
+        //$("#gifs").text(JSON.stringify(response));
 
         // Creating a div to hold the gifd
         var gifDiv = $("<div class='gifs'>");
 
         // Storing the rating data
-        var rating = response.Rated;
+        var rating = response.data.Rated;
 
         // Creating an element to have the rating displayed
         var myRating = $("<p>").text("Rating: " + rating);
@@ -31,13 +32,13 @@ function seekGif() {
         gifDiv.append(myRating);
 
         // WHAT IS GIF URL?Creating an element to hold the image
-        var image = $("<img>").attr("src", imgURL);
+        var image = $("<img>").attr("src", data.img);
 
         // Appending the image
         gifDiv.append(image);
 
         // Putting the GIF PACKAGE ON TOP
-        $("#gifs-view").prepend(gifDiv);
+        $("#gifs").prepend(gifDiv);
     });
 
 }
@@ -109,18 +110,7 @@ $("#addEntry").on("click", function() {
 });
 
 
-// This function handles events where a gif button is clicked
-//$("#add-gif").on("click", function(event) {
-    //event.preventDefault();
-    // This line grabs the input from the textbox
-   // var gif = $("#input").val().trim();
 
-    // Adding a query from the textbox to our array
-    //gifs.push(gif);
-
-    // Calling renderButtons which handles the processing of our movie array
-    //renderButtons();
-//});
 
 // Adding a click event listener to all elements with a class of "gif-btn"
 $(document).on("click", ".gif-btn", seekGif);
